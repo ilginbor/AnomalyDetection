@@ -21,7 +21,7 @@ def main():
 
     elif secim == "3":
         import subprocess
-        subprocess.run(["python", "app/gui_app.py"])
+        subprocess.run(["python", "-m", "app.gui_app"])
     else:
         print("❌ Geçersiz seçim.")
 
