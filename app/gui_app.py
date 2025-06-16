@@ -1,6 +1,5 @@
 import customtkinter as ctk
 import numpy as np
-""" import joblib """
 
 from app.predict import predict_transaction
 
