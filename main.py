@@ -1,40 +1,29 @@
-# 🛡️ Anomaly Detection in Financial Transactions (VS Code ile)
+def main():
+    import sys
+    print("🛡️ Anomaly Detection in Financial Transactions")
+    print("1 - Modeli Eğit")
+    print("2 - CLI ile Tahmin Yap")
+    print("3 - GUI Arayüzü Başlat")
+    secim = input("Seçiminiz: ")
 
-# 1. Gerekli kütüphaneler
-import pandas as pd
-import numpy as np
-from sklearn.preprocessing import StandardScaler
-from sklearn.ensemble import IsolationForest
-from sklearn.metrics import classification_report, confusion_matrix
-import seaborn as sns
-import matplotlib.pyplot as plt
+    if secim == "1":
+        from model.train_model import train_model
+        train_model()
+        print("✅ Eğitim tamamlandı.")
 
-# 2. Veri setini oku
-df = pd.read_csv('creditcard.csv')
-print("İlk 5 satır:")
-print(df.head())
+    elif secim == "2":
+        from app.predict import predict_transaction
+        import numpy as np
+        giris = input("29 özellik girin (virgülle): ").split(",")
+        veriler = np.array([float(x.strip()) for x in giris]).reshape(1, -1)
+        sonuc = predict_transaction(veriler)
+        print(f"🔎 Tahmin sonucu: {sonuc}")
 
-# 3. Veri ön işleme
-scaler = StandardScaler()
-df['scaled_amount'] = scaler.fit_transform(df[['Amount']])
-df = df.drop(['Time', 'Amount'], axis=1)
+    elif secim == "3":
+        import subprocess
+        subprocess.run(["python", "app/gui_app.py"])
+    else:
+        print("❌ Geçersiz seçim.")
 
-# 4. Isolation Forest modeli
-model = IsolationForest(contamination=0.001, random_state=42)
-model.fit(df.drop('Class', axis=1))
-
-df['anomaly'] = model.predict(df.drop('Class', axis=1))
-df['anomaly'] = df['anomaly'].apply(lambda x: 1 if x == -1 else 0)
-
-# 5. Değerlendirme
-print("\nSınıflandırma Raporu:")
-print(classification_report(df['Class'], df['anomaly']))
-print("Confusion Matrix:")
-print(confusion_matrix(df['Class'], df['anomaly']))
-
-# 6. Grafikle göster
-sns.heatmap(confusion_matrix(df['Class'], df['anomaly']), annot=True, fmt='d')
-plt.title('Confusion Matrix')
-plt.xlabel('Tahmin')
-plt.ylabel('Gerçek')
-plt.show()
+if __name__ == "__main__":
+    main()
