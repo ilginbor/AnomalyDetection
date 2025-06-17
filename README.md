@@ -9,6 +9,12 @@ Bu proje, kredi kartı işlemleri üzerinde anomali tespiti yapmayı amaçlar. M
 - Arayüz: CLI & CustomTkinter GUI
 - Çıktılar: Confusion Matrix, classification report, .pkl model dosyası
 
+## 📦 Gerekli Kütüphaneler
+Projeyi çalıştırmadan önce gerekli Python kütüphanelerini kurmak için
+terminalde şu komutu çalıştırabilirsiniz :
+
+`pip install pandas numpy scikit-learn matplotlib seaborn customtkinter`
+
 ## ⚙️ Kullanım
 
 VS Code terminalinden:
